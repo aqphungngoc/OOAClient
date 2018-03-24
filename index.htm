@@ -25,34 +25,22 @@
 
     <script type="text/javascript" src="jquery/js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/onclicknotify.js"></script>
+
     <!-- Making BackGround image -->
-
-    <script>
-    </script>
-
 </head>
 
 <body>
-
-
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-1 col-sm-1  hidden-xs-down">
-
-            </div>
-
+            <div class="col-xs-1 col-sm-1  hidden-xs-down"></div>
             <div class="col-xs-10 col-sm-10">
-
                 <div class="page-header">
                     <h4>Các sách hiện có</h4>
                 </div>
                 <hr>
-
-                <div id="books">
-
-                </div>
                 <table id="tbl1" class="table table-hover">
                     <thead>
+                        <th>ID</th>
                         <th>Tên sách</th>
                         <th>Tác giả</th>
                         <th>Còn lại</th>
@@ -61,12 +49,28 @@
                     </tbody>
                 </table>
                 <script>
-                    $(document).ready(function() {
-                        var url = "http://192.168.1.66:8080/web/list-books";
-                        $.get(url, function(data) {
-                            //alert("Data: " + data);
+                    function onClickRow(x) {
+                        var id = x.cells[0].innerHTML;
+                        //alert(id);
+                        // $('#myModal').modal('toggle');
+                        // $('#myModal').modal('show');
+                        // $('#myModal').modal('hide');
+                        var borurl = "http://192.168.1.66:8080/web/borrow-book";
+                        var data = {
+                            bookID: id,
+                            quantity: 1
+                        };
+                        $.post(borurl, data,
+                            function() {
+                                alert("success");
+                                location.reload();
+                            });
 
-                        });
+                    }
+                    $(document).ready(function() {
+
+
+                        var url = "http://192.168.1.66:8080/web/list-books";
                         var xmlhttp = new XMLHttpRequest();
                         xmlhttp.onreadystatechange = function() {
                             if (this.readyState == 4) {
@@ -75,14 +79,16 @@
                                     for (var i = 0; i < obj.listBooks.length; i++) {
                                         var r = document.createElement("tr");
                                         r.setAttribute("class", "clickable-row");
-                                        r.setAttribute("data-target", "#myModal");
-                                        r.setAttribute("data-toggle", "modal");
+                                        r.setAttribute("onClick", "onClickRow(this)");
+                                        var c0 = document.createElement("td");
                                         var c1 = document.createElement("td");
                                         var c2 = document.createElement("td");
                                         var c3 = document.createElement("td");
+                                        c0.innerHTML = obj.listBooks[i].bookID;
                                         c1.innerHTML = obj.listBooks[i].bookName;
                                         c2.innerHTML = obj.listBooks[i].bookAuthor;
                                         c3.innerHTML = obj.listBooks[i].bookQuantity;
+                                        r.appendChild(c0);
                                         r.appendChild(c1);
                                         r.appendChild(c2);
                                         r.appendChild(c3);
@@ -92,63 +98,13 @@
                                 }
                             }
                         };
-                        xmlhttp.open("GET", "list-books.json", true);
+                        xmlhttp.open("GET", url, true);
                         xmlhttp.send(null);
-                        $(".clickable-row").click(function() {
-                            window.location = $(this).data("href");
-                        });
+
+
                     });
                 </script>
 
-
-
-                <button class="btn btn-lg btn-primary" type="submit" data-toggle="modal" data-target="#myModal">Submit</button>
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="Phản hồi" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-
-                                <h5 class="modal-title" id="modaltitle">Xác nhận mượn</h5>
-
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                   <span aria-hidden="true">&times;</span>
-                               </button>
-                            </div>
-                            <div class="modal-body" id="modalbody">
-                                <div class="container">
-                                    <div class="row">
-                                        <h3 id="book">Tên sách<br><small id="Author">Tên tác giả </small></h3>
-                                    </div>
-
-                                    <div class="row lead">
-                                        <div id="stars" class="starrr"></div>
-                                        You gave a rating of <span id="count">0</span> star(s)
-                                    </div>
-
-                                    <div class="row lead">
-                                        <p>Đánh giá của bạn:</p>
-                                        <br>
-                                        <div id="stars-existing" class="starrr" data-rating='4'></div>
-                                    </div>
-                                    <div class="row lead">
-                                        <p> Bạn đã đánh giá <span id="count-existing">4</span> sao.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                <button type="button" class="btn btn-primary" id="Sendbut">Gửi đi</button>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#Sendbut').click(function() {
-                                            $("#count-existing").val();
-                                        });
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div>
             <div class="col-xs-1 col-sm-1">
