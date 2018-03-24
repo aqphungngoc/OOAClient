@@ -1,0 +1,88 @@
+<ul class="list-group">
+    <div id="tasklist" class="maintasklist">
+        <div class="card">
+            <!-- id của thẻ lỗi -->
+            <div id="task1">
+                <!-- thanh hiển thị của cái thẻ lỗi đó -->
+                <a class="card-header card-link list-group-item list-group-item-action" data-parent="#tasklist" data-toggle="collapse" href="#collapse1">
+                    <div id="content" class="cardcontent">
+                        <div id="username">BookId</div>
+                        <div id="errortitle">Tên sách</div>
+                        <div id="state">Số trong kho</div>
+                        <!-- <div id="ordereddate">ngày yêu cầu</div> -->
+                    </div>
+                </a>
+            </div>
+            <div id="collapse1" class="collapse show">
+                <!-- Nội dung thẻ lỗi có gì -->
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <h3 id="book">Tên sách<br><small id="Author">Tên tác giả </small></h3>
+                        </div>
+
+                        <div class="row lead">
+                            <p>Đánh giá của bạn:</p>
+                            <br>
+                            <div id="stars-existing" class="starrr" data-rating='4'></div>
+                        </div>
+                        <div class="row lead">
+                            <p> Bạn đã đánh giá <span id="count-existing">4</span> sao.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</ul>
+
+<!-- Phản hồi, đánh giá -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="Phản hồi" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="modaltitle">Xác nhận mượn</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body" id="modalbody">
+                <div class="container">
+                    <div class="row">
+                        <h3 id="book">Tên sách<br><small id="Author">Tên tác giả </small></h3>
+                    </div>
+
+                    <div class="row lead">
+                        <div id="stars" class="starrr"></div>
+                        You gave a rating of <span id="count">0</span> star(s)
+                    </div>
+
+                    <div class="row lead">
+                        <p>Đánh giá của bạn:</p>
+                        <br>
+                        <div id="stars-existing" class="starrr" data-rating='4'></div>
+                    </div>
+                    <div class="row lead">
+                        <p> Bạn đã đánh giá <span id="count-existing">4</span> sao.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="Sendbut">Gửi đi</button>
+                <script>
+                    $(document).ready(function() {
+                        $('#Sendbut').click(function() {
+                            $("#count-existing").val();
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>

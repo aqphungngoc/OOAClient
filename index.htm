@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Nhận và sửa chữa thiết bị lỗi">
+    <meta name="author" content="AQ,VA,NS">
+    <link rel="icon" href="icon\Icon1.ico">
+
+    <title>Yêu cầu sửa</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="bootstrap-4.0.0-alpha.6-dist\css\bootstrap.min.css">
+    <script src="bootstrap-4.0.0-alpha.6-dist\js\bootstrap.min.js"></script>
+    <link rel="stylesheet" href="tether-1.3.3\dist\css\tether.min.css">
+
+    <link href="font-awesome-4.7.0\css\font-awesome.min.css" rel="stylesheet" />
+    <link href="starrr-gh-pages\dist\starrr.css" rel="StyleSheet" type="text/css">
+    <!-- Custom styles for this template -->
+    <link href="css/CoverPage.css" rel="stylesheet">
+    <link href="css/Dashboard.css" rel="stylesheet">
+    <link href="css/Notification.css" rel="StyleSheet" type="text/css">
+
+    <script type="text/javascript" src="jquery/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/onclicknotify.js"></script>
+    <!-- Making BackGround image -->
+
+    <script>
+    </script>
+
+</head>
+
+<body>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-1 col-sm-1  hidden-xs-down">
+
+            </div>
+
+            <div class="col-xs-10 col-sm-10">
+
+                <div class="page-header">
+                    <h4>Các sách hiện có</h4>
+                </div>
+                <hr>
+
+                <div id="books">
+
+                </div>
+                <table id="tbl1" class="table table-hover">
+                    <thead>
+                        <th>Tên sách</th>
+                        <th>Tác giả</th>
+                        <th>Còn lại</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <script>
+                    $(document).ready(function() {
+                        var url = "http://192.168.1.66:8080/web/list-books";
+                        $.get(url, function(data) {
+                            //alert("Data: " + data);
+
+                        });
+                        var xmlhttp = new XMLHttpRequest();
+                        xmlhttp.onreadystatechange = function() {
+                            if (this.readyState == 4) {
+                                if (this.status == 200) {
+                                    var obj = JSON.parse(this.responseText);
+                                    for (var i = 0; i < obj.listBooks.length; i++) {
+                                        var r = document.createElement("tr");
+                                        r.setAttribute("class", "clickable-row");
+                                        r.setAttribute("data-target", "#myModal");
+                                        r.setAttribute("data-toggle", "modal");
+                                        var c1 = document.createElement("td");
+                                        var c2 = document.createElement("td");
+                                        var c3 = document.createElement("td");
+                                        c1.innerHTML = obj.listBooks[i].bookName;
+                                        c2.innerHTML = obj.listBooks[i].bookAuthor;
+                                        c3.innerHTML = obj.listBooks[i].bookQuantity;
+                                        r.appendChild(c1);
+                                        r.appendChild(c2);
+                                        r.appendChild(c3);
+                                        document.querySelector("#tbl1 tbody").appendChild(r);
+                                    }
+                                    // document.getElementById("books").innerHTML = obj.listBooks[1].bookName;
+                                }
+                            }
+                        };
+                        xmlhttp.open("GET", "list-books.json", true);
+                        xmlhttp.send(null);
+                        $(".clickable-row").click(function() {
+                            window.location = $(this).data("href");
+                        });
+                    });
+                </script>
+
+
+
+                <button class="btn btn-lg btn-primary" type="submit" data-toggle="modal" data-target="#myModal">Submit</button>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="Phản hồi" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <h5 class="modal-title" id="modaltitle">Xác nhận mượn</h5>
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                            </div>
+                            <div class="modal-body" id="modalbody">
+                                <div class="container">
+                                    <div class="row">
+                                        <h3 id="book">Tên sách<br><small id="Author">Tên tác giả </small></h3>
+                                    </div>
+
+                                    <div class="row lead">
+                                        <div id="stars" class="starrr"></div>
+                                        You gave a rating of <span id="count">0</span> star(s)
+                                    </div>
+
+                                    <div class="row lead">
+                                        <p>Đánh giá của bạn:</p>
+                                        <br>
+                                        <div id="stars-existing" class="starrr" data-rating='4'></div>
+                                    </div>
+                                    <div class="row lead">
+                                        <p> Bạn đã đánh giá <span id="count-existing">4</span> sao.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-primary" id="Sendbut">Gửi đi</button>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#Sendbut').click(function() {
+                                            $("#count-existing").val();
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-xs-1 col-sm-1">
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+            ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <script src="jquery\js\jquery-3.2.1.min.js"></script>
+    <script src="tether-1.3.3\dist\js\tether.min.js"></script>
+    <script src="bootstrap-4.0.0-alpha.6-dist\js\bootstrap.min.js"></script>
+    <script src="starrr-gh-pages\dist\starrr.js"></script>
+    <script src="js\starrating.js"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+    </script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+</body>
+
+</html>

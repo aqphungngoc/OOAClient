@@ -1,0 +1,160 @@
+/*
+ * Base structure
+ */
+
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+
+body {
+    padding-top: 50px;
+}
+
+
+/*
+ * Typography
+ */
+
+h1 {
+    margin-bottom: 20px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid #eee;
+}
+
+
+/*
+ * Sidebar
+ */
+
+[class*="col-"] {
+    border: 2px transparent rgba(86, 61, 124, .2);
+    background-blend-mode: darken
+}
+
+.sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Scrollable contents if viewport is shorter than content. */
+}
+
+
+/* Sidebar navigation */
+
+.sidebar {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.sidebar .nav {
+    margin-bottom: 20px;
+}
+
+.sidebar .nav-item {
+    width: 100%;
+}
+
+.sidebar .nav-item+.nav-item {
+    margin-left: 0;
+}
+
+.sidebar .nav-link {
+    border-radius: 0;
+}
+
+
+/*
+ * Dashboard
+ */
+
+
+/* Placeholders */
+
+.placeholders {
+    padding-bottom: 3rem;
+}
+
+.placeholder img {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.card {
+    background-color: dimgray;
+}
+
+.maintasklist {
+    padding-top: 1.5rem;
+}
+
+.bg-faded {
+    background-color: rgb(37, 32, 32);
+}
+
+.bg-taskmenu {
+    background-color: rgb(37, 32, 32);
+}
+
+.bg-submenu {
+    background-color: rgb(58, 49, 49);
+}
+
+
+/*==Thiết lập cột cho thẻ==*/
+
+.cardcontent {
+    border: transparent;
+    clear: both;
+}
+
+
+/*==cột #post==*/
+
+#username {
+    float: left;
+}
+
+
+/*==cột #sidebar==*/
+
+#errortitle {
+    border-right: 1px solid;
+    float: left;
+}
+
+#state {
+    border-right: 1px solid;
+    float: right;
+}
+
+#ordereddate {
+    border-right: 1px solid;
+    float: right;
+}
+
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+
+.rating>span {
+    text-size: 2rem;
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+    color: rgb(255, 255, 0);
+}
+
+.rating>span:hover:before,
+.rating>span:hover~span:before {
+    content: "\2605";
+    position: absolute;
+}
+
+#stars-existing {
+    color: rgb(178, 238, 14);
+}
