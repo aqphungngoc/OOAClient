@@ -51,26 +51,38 @@
                 <script>
                     function onClickRow(x) {
                         var id = x.cells[0].innerHTML;
+
                         //alert(id);
-                        // $('#myModal').modal('toggle');
-                        // $('#myModal').modal('show');
-                        // $('#myModal').modal('hide');
-                        var borurl = "http://192.168.1.66:8080/web/borrow-book";
-                        var data = {
-                            bookID: id,
-                            quantity: 1
-                        };
-                        $.post(borurl, data,
-                            function() {
-                                alert("success");
+                        $('#book').text(x.cells[1].innerHTML);
+                        $('#author').text(x.cells[2].innerHTML);
+                        $('#quantity').text(x.cells[3].innerHTML);
+                        $('#Sendbut').click(function() {
+                            var quan = x.cells[3].innerHTML;
+                            if (quan >= 2) {
+                                // var borurl = "http://192.168.1.66:8080/web/borrow-book";
+                                // var data = {
+                                //     bookID: id,
+                                //     quantity: 1
+                                // };
+                                // $.post(borurl, data,
+                                //     function() {
+                                alert("Mượn thành công");
                                 location.reload();
-                            });
+                                //     });
+                            } else {
+                                alert("Không đủ sách cho bạn mượn");
+                                location.reload();
+                            }
+                        });
+                        $('#myModal').modal('toggle');
+                        $('#myModal').modal('show');
+                        $('#myModal').modal('hide');
 
                     }
                     $(document).ready(function() {
 
 
-                        var url = "http://192.168.1.66:8080/web/list-books";
+                        var url = "list-books.json";
                         var xmlhttp = new XMLHttpRequest();
                         xmlhttp.onreadystatechange = function() {
                             if (this.readyState == 4) {
@@ -108,6 +120,37 @@
 
             </div>
             <div class="col-xs-1 col-sm-1">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="Phản hồi" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaltitle">Xác nhận mượn</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                       </button>
+                </div>
+                <div class="modal-body" id="modalbody">
+                    <div class="container">
+                        <div class="row">
+                            <h3 id="book">Tên sách</h3>
+                        </div>
+                        <div class="row">
+                            <small id="author">Tên tác giả</small>
+                        </div>
+                        <div class="row lead">
+                            <p> Số sách còn lại <span id="quantity">4</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="Sendbut">Mượn</button>
+
+                </div>
             </div>
         </div>
     </div>
